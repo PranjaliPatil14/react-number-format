@@ -155,16 +155,9 @@ class NumberFormat extends React.Component {
       const floatValue = parseFloat(numAsString);
       const lastFloatValue = parseFloat(lastNumStr);
 
-      if (
-        //while typing set state only when float value changes
-        ((!isNaN(floatValue) || !isNaN(lastFloatValue)) && floatValue !== lastFloatValue) ||
-        //can also set state when float value is same and the format props changes
-        lastValueWithNewFormat !== stateValue ||
-        //set state always when not in focus and formatted value is changed
-        (focusedElm === null && formattedValue !== stateValue)
-      ) {
+      
         this.updateValue({ formattedValue, numAsString, input: focusedElm });
-      }
+      
     }
   }
 
