@@ -143,7 +143,6 @@ class NumberFormat extends React.Component {
     const {value: stateValue, numAsString: lastNumStr = ''} = state;
 
     // If only state changed no need to do any thing
-    if(prevProps !== props) {
       //validate props
       this.validateProps();
 
@@ -157,8 +156,6 @@ class NumberFormat extends React.Component {
 
       
         this.updateValue({ formattedValue, numAsString, input: focusedElm });
-      
-    }
   }
 
   /** Misc methods **/
