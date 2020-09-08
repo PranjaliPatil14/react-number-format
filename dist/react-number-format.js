@@ -1099,14 +1099,12 @@
         } //update state if value is changed
 
 
-        if (formattedValue !== lastValue) {
-          this.setState({
-            value: formattedValue,
-            numAsString: numAsString
-          }); // trigger onValueChange synchronously, so parent is updated along with the number format. Fix for #277, #287
+        this.setState({
+          value: formattedValue,
+          numAsString: numAsString
+        }); // trigger onValueChange synchronously, so parent is updated along with the number format. Fix for #277, #287
 
-          onValueChange(this.getValueObject(formattedValue, numAsString));
-        }
+        onValueChange(this.getValueObject(formattedValue, numAsString));
       }
     }, {
       key: "onChange",
