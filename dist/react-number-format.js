@@ -463,22 +463,17 @@
         var stateValue = state.value,
             _state$numAsString = state.numAsString,
             lastNumStr = _state$numAsString === void 0 ? '' : _state$numAsString; // If only state changed no need to do any thing
+        //validate props
 
-        console.log("prevProps ", prevProps);
-        console.log("props ", props);
-
-        if (prevProps !== props) {
-          //validate props
-          this.validateProps();
-          var lastValueWithNewFormat = this.formatNumString(lastNumStr);
-          var formattedValue = props.value === undefined ? lastValueWithNewFormat : this.formatValueProp();
-          var numAsString = this.removeFormatting(formattedValue);
-          this.updateValue({
-            formattedValue: formattedValue,
-            numAsString: numAsString,
-            input: focusedElm
-          });
-        }
+        this.validateProps();
+        var lastValueWithNewFormat = this.formatNumString(lastNumStr);
+        var formattedValue = props.value === undefined ? lastValueWithNewFormat : this.formatValueProp();
+        var numAsString = this.removeFormatting(formattedValue);
+        this.updateValue({
+          formattedValue: formattedValue,
+          numAsString: numAsString,
+          input: focusedElm
+        });
       }
       /** Misc methods **/
 
@@ -1050,7 +1045,6 @@
     }, {
       key: "updateValue",
       value: function updateValue(params) {
-        console.log("in update value");
         var formattedValue = params.formattedValue,
             input = params.input,
             _params$setCaretPosit = params.setCaretPosition,
@@ -1098,8 +1092,7 @@
         this.setState({
           value: formattedValue,
           numAsString: numAsString
-        });
-        console.log("did set state"); // trigger onValueChange synchronously, so parent is updated along with the number format. Fix for #277, #287
+        }); // trigger onValueChange synchronously, so parent is updated along with the number format. Fix for #277, #287
 
         onValueChange(this.getValueObject(formattedValue, numAsString));
       }

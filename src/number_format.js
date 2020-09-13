@@ -143,9 +143,6 @@ class NumberFormat extends React.Component {
     const {value: stateValue, numAsString: lastNumStr = ''} = state;
 
     // If only state changed no need to do any thing
-    console.log("prevProps ", prevProps);
-    console.log("props ", props);
-    if(prevProps !== props) {
       //validate props
       this.validateProps();
 
@@ -159,8 +156,6 @@ class NumberFormat extends React.Component {
 
       
         this.updateValue({ formattedValue, numAsString, input: focusedElm });
-      
-    }
   }
 
   /** Misc methods **/
@@ -670,7 +665,6 @@ class NumberFormat extends React.Component {
       setCaretPosition: Boolean,
     }
   ) {
-    console.log("in update value");
     const {formattedValue, input, setCaretPosition = true} = params;
     let {numAsString, caretPos} = params;
     const {onValueChange} = this.props;
@@ -717,8 +711,6 @@ class NumberFormat extends React.Component {
     //update state if value is changed
     
       this.setState({ value : formattedValue, numAsString });
-    
-    console.log("did set state");
 
       // trigger onValueChange synchronously, so parent is updated along with the number format. Fix for #277, #287
       onValueChange(this.getValueObject(formattedValue, numAsString));
