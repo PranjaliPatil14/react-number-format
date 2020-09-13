@@ -463,17 +463,19 @@
         var stateValue = state.value,
             _state$numAsString = state.numAsString,
             lastNumStr = _state$numAsString === void 0 ? '' : _state$numAsString; // If only state changed no need to do any thing
-        //validate props
 
-        this.validateProps();
-        var lastValueWithNewFormat = this.formatNumString(lastNumStr);
-        var formattedValue = props.value === undefined ? lastValueWithNewFormat : this.formatValueProp();
-        var numAsString = this.removeFormatting(formattedValue);
-        this.updateValue({
-          formattedValue: formattedValue,
-          numAsString: numAsString,
-          input: focusedElm
-        });
+        if (prevProps !== props) {
+          //validate props
+          this.validateProps();
+          var lastValueWithNewFormat = this.formatNumString(lastNumStr);
+          var formattedValue = props.value === undefined ? lastValueWithNewFormat : this.formatValueProp();
+          var numAsString = this.removeFormatting(formattedValue);
+          this.updateValue({
+            formattedValue: formattedValue,
+            numAsString: numAsString,
+            input: focusedElm
+          });
+        }
       }
       /** Misc methods **/
 
