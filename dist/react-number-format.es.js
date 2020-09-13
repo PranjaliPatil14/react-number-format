@@ -467,6 +467,9 @@ function (_React$Component) {
         var numAsString = this.removeFormatting(formattedValue);
         var floatValue = parseFloat(numAsString);
         var lastFloatValue = parseFloat(lastNumStr);
+        console.log("lastValueWithNewFormat ", lastValueWithNewFormat);
+        console.log("stateValue ", stateValue);
+        console.log("formattedValue ", formattedValue);
 
         if ( //while typing set state only when float value changes
         (!isNaN(floatValue) || !isNaN(lastFloatValue)) && floatValue !== lastFloatValue || //can also set state when float value is same and the format props changes

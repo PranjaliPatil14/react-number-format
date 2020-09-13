@@ -155,6 +155,9 @@ class NumberFormat extends React.Component {
 
       const floatValue = parseFloat(numAsString);
       const lastFloatValue = parseFloat(lastNumStr);
+      console.log("lastValueWithNewFormat ", lastValueWithNewFormat);
+      console.log("stateValue ", stateValue);
+      console.log("formattedValue ", formattedValue);
 
       if (
         //while typing set state only when float value changes
