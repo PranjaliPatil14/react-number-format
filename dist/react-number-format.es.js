@@ -460,6 +460,7 @@ function (_React$Component) {
 
       if (prevProps !== props) {
         //validate props
+        console.log("props not equal");
         this.validateProps();
         var lastValueWithNewFormat = this.formatNumString(lastNumStr);
         var formattedValue = props.value === undefined ? lastValueWithNewFormat : this.formatValueProp();
@@ -471,6 +472,7 @@ function (_React$Component) {
         (!isNaN(floatValue) || !isNaN(lastFloatValue)) && floatValue !== lastFloatValue || //can also set state when float value is same and the format props changes
         lastValueWithNewFormat !== stateValue || //set state always when not in focus and formatted value is changed
         focusedElm === null && formattedValue !== stateValue) {
+          console.log("all checks failed updating value", formattedValue);
           this.updateValue({
             formattedValue: formattedValue,
             numAsString: numAsString,
@@ -1057,6 +1059,7 @@ function (_React$Component) {
           caretPos = params.caretPos;
       var onValueChange = this.props.onValueChange;
       var lastValue = this.state.value;
+      console.log("input in updateValue", input);
 
       if (input) {
         //set caret position, and value imperatively when element is provided
@@ -1090,10 +1093,13 @@ function (_React$Component) {
 
       if (numAsString === undefined) {
         numAsString = this.removeFormatting(formattedValue);
-      } //update state if value is changed
+      }
 
+      console.log("formattedValue in onUpdate", formattedValue);
+      console.log("lastValue in onupdate", lastValue); //update state if value is changed
 
       if (formattedValue !== lastValue) {
+        console.log("set state value", formattedValue);
         this.setState({
           value: formattedValue,
           numAsString: numAsString
@@ -1132,6 +1138,7 @@ function (_React$Component) {
   }, {
     key: "onBlur",
     value: function onBlur(e) {
+      console.log("in on blur");
       var props = this.props,
           state = this.state;
       var format = props.format,
@@ -1141,6 +1148,8 @@ function (_React$Component) {
       var lastValue = state.value;
       this.focusedElm = null;
       clearTimeout(this.focusTimeout);
+      console.log("focused element ", this.focusedElm);
+      console.log("format in on blur ", format);
 
       if (!format) {
         // if the numAsString is not a valid number reset it to empty
@@ -1152,10 +1161,12 @@ function (_React$Component) {
           numAsString = fixLeadingZero(numAsString);
         }
 
-        var formattedValue = this.formatNumString(numAsString); //change the state
+        var formattedValue = this.formatNumString(numAsString);
+        console.log("formattedValue in on blur", formattedValue); //change the state
 
         if (formattedValue !== lastValue) {
-          // the event needs to be persisted because its properties can be accessed in an asynchronous way
+          console.log("lastValue in on blur updating", lastValue); // the event needs to be persisted because its properties can be accessed in an asynchronous way
+
           this.updateValue({
             formattedValue: formattedValue,
             numAsString: numAsString,
@@ -1290,6 +1301,7 @@ function (_React$Component) {
       // Workaround Chrome and Safari bug https://bugs.chromium.org/p/chromium/issues/detail?id=779328
       // (onFocus event target selectionStart is always 0 before setTimeout)
       e.persist();
+      console.log("in on focus");
       this.focusedElm = e.target;
       this.focusTimeout = setTimeout(function () {
         var el = e.target;
@@ -1298,10 +1310,13 @@ function (_React$Component) {
             _el$value3 = el.value,
             value = _el$value3 === void 0 ? '' : _el$value3;
 
-        var caretPosition = _this2.correctCaretPosition(value, selectionStart); //setPatchedCaretPosition only when everything is not selected on focus (while tabbing into the field)
+        var caretPosition = _this2.correctCaretPosition(value, selectionStart);
 
+        console.log("caretPosition in focus", caretPosition); //setPatchedCaretPosition only when everything is not selected on focus (while tabbing into the field)
 
         if (caretPosition !== selectionStart && !(selectionStart === 0 && selectionEnd === value.length)) {
+          console.log("setPatchedCaretPosition with ", caretPosition);
+
           _this2.setPatchedCaretPosition(el, caretPosition, value);
         }
 

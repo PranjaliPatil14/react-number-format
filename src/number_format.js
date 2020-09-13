@@ -145,6 +145,7 @@ class NumberFormat extends React.Component {
     // If only state changed no need to do any thing
     if(prevProps !== props) {
       //validate props
+      console.log("props not equal");
       this.validateProps();
 
       const lastValueWithNewFormat = this.formatNumString(lastNumStr);
@@ -163,6 +164,7 @@ class NumberFormat extends React.Component {
         //set state always when not in focus and formatted value is changed
         (focusedElm === null && formattedValue !== stateValue)
       ) {
+        console.log("all checks failed updating value", formattedValue)
         this.updateValue({ formattedValue, numAsString, input: focusedElm });
       }
     }
@@ -680,6 +682,7 @@ class NumberFormat extends React.Component {
     const {onValueChange} = this.props;
     const {value: lastValue} = this.state;
 
+    console.log("input in updateValue", input);
     if (input) {
       //set caret position, and value imperatively when element is provided
       if (setCaretPosition) {
@@ -717,9 +720,11 @@ class NumberFormat extends React.Component {
     if (numAsString === undefined) {
       numAsString = this.removeFormatting(formattedValue);
     }
-
+    console.log("formattedValue in onUpdate", formattedValue);
+    console.log("lastValue in onupdate", lastValue);
     //update state if value is changed
     if (formattedValue !== lastValue) {
+      console.log("set state value", formattedValue);
       this.setState({ value : formattedValue, numAsString });
 
       // trigger onValueChange synchronously, so parent is updated along with the number format. Fix for #277, #287
@@ -753,6 +758,7 @@ class NumberFormat extends React.Component {
   }
 
   onBlur(e: SyntheticInputEvent) {
+    console.log("in on blur");
     const {props, state} = this;
     const {format, onBlur, allowLeadingZeros} = props;
     let {numAsString} = state;
@@ -761,6 +767,8 @@ class NumberFormat extends React.Component {
 
     clearTimeout(this.focusTimeout);
 
+    console.log("focused element ", this.focusedElm);
+    console.log("format in on blur ", format);
 
     if (!format) {
       // if the numAsString is not a valid number reset it to empty
@@ -774,8 +782,10 @@ class NumberFormat extends React.Component {
 
       const formattedValue = this.formatNumString(numAsString);
 
+      console.log("formattedValue in on blur", formattedValue);
       //change the state
       if (formattedValue !== lastValue) {
+        console.log("lastValue in on blur updating", lastValue);
         // the event needs to be persisted because its properties can be accessed in an asynchronous way
         this.updateValue({ formattedValue, numAsString, input: e.target, setCaretPosition: false });
         onBlur(e);
@@ -881,6 +891,7 @@ class NumberFormat extends React.Component {
     // Workaround Chrome and Safari bug https://bugs.chromium.org/p/chromium/issues/detail?id=779328
     // (onFocus event target selectionStart is always 0 before setTimeout)
     e.persist();
+    console.log("in on focus");
 
     this.focusedElm = e.target;
     this.focusTimeout = setTimeout(() => {
@@ -889,8 +900,10 @@ class NumberFormat extends React.Component {
 
       const caretPosition = this.correctCaretPosition(value, selectionStart);
 
+      console.log("caretPosition in focus", caretPosition);
       //setPatchedCaretPosition only when everything is not selected on focus (while tabbing into the field)
       if (caretPosition !== selectionStart && !(selectionStart === 0 && selectionEnd === value.length)) {
+        console.log("setPatchedCaretPosition with ", caretPosition);
         this.setPatchedCaretPosition(el, caretPosition, value);
       }
 
