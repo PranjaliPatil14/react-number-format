@@ -470,11 +470,19 @@
           var lastValueWithNewFormat = this.formatNumString(lastNumStr);
           var formattedValue = props.value === undefined ? lastValueWithNewFormat : this.formatValueProp();
           var numAsString = this.removeFormatting(formattedValue);
-          this.updateValue({
-            formattedValue: formattedValue,
-            numAsString: numAsString,
-            input: focusedElm
-          });
+          var floatValue = parseFloat(numAsString);
+          var lastFloatValue = parseFloat(lastNumStr);
+
+          if ( //while typing set state only when float value changes
+          (!isNaN(floatValue) || !isNaN(lastFloatValue)) && floatValue !== lastFloatValue || //can also set state when float value is same and the format props changes
+          lastValueWithNewFormat !== stateValue || //set state always when not in focus and formatted value is changed
+          focusedElm === null && formattedValue !== stateValue) {
+            this.updateValue({
+              formattedValue: formattedValue,
+              numAsString: numAsString,
+              input: focusedElm
+            });
+          }
         }
       }
       /** Misc methods **/
