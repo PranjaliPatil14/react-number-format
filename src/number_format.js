@@ -719,12 +719,12 @@ class NumberFormat extends React.Component {
     }
 
     //update state if value is changed
-    
+    if (formattedValue !== lastValue) {
       this.setState({ value : formattedValue, numAsString });
 
       // trigger onValueChange synchronously, so parent is updated along with the number format. Fix for #277, #287
       onValueChange(this.getValueObject(formattedValue, numAsString));
-    
+    }
   }
 
   onChange(e: SyntheticInputEvent) {
